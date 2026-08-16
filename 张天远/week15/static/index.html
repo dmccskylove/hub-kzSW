@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Subagent 并行任务 · 可视化</title>
+<style>
+  :root {
+    --bg:#060912; --panel:rgba(20,30,55,0.55); --panel-solid:#0e1530;
+    --border:rgba(0,212,255,0.18); --cyan:#00d4ff; --blue:#4f8cff;
+    --orange:#ffb020; --green:#2ee6a0; --red:#ff5c7a;
+    --text:#d6e2f5; --muted:#7a8db5;
+  }
+  * { box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei",Calibri,sans-serif; margin:0; color:var(--text);
+         background:linear-gradient(135deg,#060912 0%,#0a1228 50%,#060912 100%);
+         min-height:100vh; }
+  .wrap { max-width:1300px; margin:0 auto; padding:16px; }
+  h1 { margin:0 0 2px; font-size:22px; font-weight:700;
+       background:linear-gradient(90deg,#00d4ff,#4f8cff,#b4a0ff);
+       -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:.5px; }
+  .sub { color:var(--muted); font-size:12px; margin-bottom:12px; }
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:10px;
+          padding:14px; margin-bottom:12px; backdrop-filter:blur(6px);
+          box-shadow:0 0 24px rgba(0,120,200,0.05) inset, 0 4px 18px rgba(0,0,0,.35); }
+  textarea { width:100%; border:1px solid var(--border); border-radius:7px; padding:10px;
+            font-size:14px; background:rgba(8,14,30,0.7); color:var(--text); }
+  textarea:focus { outline:none; border-color:var(--cyan); box-shadow:0 0 0 2px rgba(0,212,255,.15); }
+  .ctrl { display:flex; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  button { background:linear-gradient(135deg,#1b3a7a,#2a5cd6); color:#fff; border:none;
+           border-radius:6px; padding:7px 15px; cursor:pointer; font-size:13px;
+           box-shadow:0 0 12px rgba(79,140,255,.25); transition:.2s; }
+  button:hover { box-shadow:0 0 18px rgba(0,212,255,.5); transform:translateY(-1px); }
+  button:disabled { background:#2a3354; box-shadow:none; cursor:default; opacity:.6; }
+  .ex { background:rgba(20,40,80,.6); border:1px solid var(--border); color:var(--cyan);
+        box-shadow:none; }
+  .ex:hover { background:rgba(0,90,140,.4); }
+  .spinner { width:14px; height:14px; border:2px solid rgba(0,212,255,.2);
+             border-top:var(--cyan); border-radius:50%; animation:spin .8s linear infinite; display:none; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .grid { display:grid; grid-template-columns: 400px 1fr; gap:12px; }
+  .nodesel { font-size:11px; color:var(--muted); margin-bottom:8px; display:flex; flex-wrap:wrap; align-items:center; gap:4px; }
+  .nodebtn { font-size:11px; padding:3px 9px; margin:2px; border-radius:10px;
+             background:rgba(30,50,90,.5); color:var(--text); border:1px solid transparent; cursor:pointer; }
+  .nodebtn.on { background:linear-gradient(135deg,#00d4ff,#4f8cff); color:#06122a; font-weight:700;
+                box-shadow:0 0 10px rgba(0,212,255,.5); }
+  .feed { max-height:560px; overflow-y:auto; padding-right:4px; }
+  .feed::-webkit-scrollbar { width:6px; }
+  .feed::-webkit-scrollbar-thumb { background:rgba(0,212,255,.3); border-radius:3px; }
+  .step { border-left:3px solid var(--blue); background:rgba(10,18,40,.6);
+          margin:6px 0; padding:7px 11px; border-radius:4px; font-size:12px; }
+  .step.main { border-left-color:var(--cyan); }
+  .step.done { opacity:.85; }
+  .step .nbadge { display:inline-block; font-size:9px; padding:1px 7px; border-radius:8px;
+                   background:rgba(0,212,255,.15); color:var(--cyan); margin-right:6px; }
+  .step.sub .nbadge { background:rgba(79,140,255,.18); color:var(--blue); }
+  .step .act { color:var(--orange); font-weight:700; margin:2px 0; word-break:break-word; }
+  .step .obs { color:#aab8d8; white-space:pre-wrap; word-break:break-word;
+               max-height:120px; overflow-y:auto; background:rgba(4,8,20,.5);
+               padding:4px 6px; border-radius:3px; margin-top:3px;
+               font-family:Consolas,monospace; font-size:11px; }
+  .step .fa { color:var(--green); font-weight:700; }
+  .step .done-line { color:var(--green); margin-top:3px; font-size:11px; }
+  .ans { font-size:14px; line-height:1.75; white-space:pre-wrap; }
+  .stats { font-size:12px; color:var(--green); margin-top:8px; padding:6px 10px;
+           background:rgba(46,230,160,.08); border-radius:5px; border:1px solid rgba(46,230,160,.2); }
+  .status-tag { font-size:10px; padding:1px 7px; border-radius:8px; margin-left:6px; }
+  .status-running { background:rgba(255,176,32,.18); color:var(--orange); }
+  .status-done { background:rgba(46,230,160,.18); color:var(--green); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>▮ 主 Agent · Subagent 并行执行可视化</h1>
+  <div class="sub">主 agent 自主拆分派发 · 左拓扑右实时过程流 · 凸显并行加速（Orchestrator-Workers / PPT 6.3）</div>
+
+  <div class="card">
+    <textarea id="q" rows="2">生成一个 Python 计算器项目：需要 calculator.py（四则运算+历史记录）、test_calculator.py（单元测试）、README.md（用法说明），三个文件并行完成</textarea>
+    <div class="ctrl">
+      <button id="ask" onclick="ask()">▶ 开始任务</button>
+      <div id="spin" class="spinner"></div>
+      <span style="font-size:12px;color:var(--muted)">示例：</span>
+      <button class="ex" onclick="fill('生成一个 Python 计算器项目：需要 calculator.py（四则运算+历史记录）、test_calculator.py（单元测试）、README.md（用法说明），三个文件并行完成')">计算器项目(派发)</button>
+      <button class="ex" onclick="fill('生成一个待办事项 todo.py：单文件即可，支持添加/列出/完成/删除')">单文件(不派发)</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:14px;color:var(--cyan)">◆ 任务拓扑</h3>
+      <div id="topo"></div>
+      <div class="stats" id="stats" style="display:none"></div>
+    </div>
+    <div class="card">
+      <div class="nodesel" id="nodesel"></div>
+      <div class="feed" id="feed"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 8px;font-size:14px;color:var(--cyan)">◆ 最终交付</h3>
+    <div id="ans" class="ans">（执行后显示）</div>
+  </div>
+</div>
+
+<script src="/static/viz/topology.js"></script>
+<script>
+let topo = null;
+let allSteps = [];          // 全局有序步骤流：[{node, nodeType, step}]
+let traces = {};            // {nodeId: [step]}
+let nodeMeta = {};          // {id: {topic, status}}
+let currentNode = 'all';    // 'all' 或某 node id
+let autoFollow = true;      // 是否自动滚动到底
+let subTopics = {};         // {sid: topic}
+let lastStepKey = {};       // {nodeId: 当前挂起的 act 步骤下标} —— observe 合并进同一步
+
+// ★ 回放机制：SSE 若被代理/浏览器缓冲成"最后一次性到达"，按事件 ts 的原始间隔回放渲染
+let evQueue = [];           // 待处理事件队列
+let replaying = false;      // 回放模式标志
+const REPLAY_MIN = 50;      // 回放最小间隔 ms
+const REPLAY_MAX = 800;     // 回放最大间隔 ms
+
+function enqueueEvent(ev) {
+  if (!evQueue.length) {
+    // 队列空：直接处理（稀疏实时流无延迟）；若与上批间隔极小则由回放定时器接管
+    handleEvent(ev);
+    return;
+  }
+  evQueue.push(ev);
+  if (!replaying) { replaying = true; replayTick(); }
+}
+
+function replayTick() {
+  if (!evQueue.length) { replaying = false; return; }
+  const ev = evQueue.shift();
+  handleEvent(ev);
+  const next = evQueue[0];
+  let delay = REPLAY_MIN;
+  if (next && typeof ev.ts === 'number' && typeof next.ts === 'number') {
+    delay = Math.min(REPLAY_MAX, Math.max(REPLAY_MIN, (next.ts - ev.ts) * 1000));
+  }
+  setTimeout(replayTick, delay);
+}
+
+function fill(q) { document.getElementById('q').value = q; }
+
+async function ask() {
+  const q = document.getElementById('q').value.trim();
+  if (!q) return;
+  const btn = document.getElementById('ask'), spin = document.getElementById('spin');
+  btn.disabled = true; spin.style.display = 'inline-block';
+  document.getElementById('ans').textContent = '（执行中…）';
+  document.getElementById('stats').style.display = 'none';
+  // 重置：整体换图 + 清空流
+  allSteps = []; traces = {}; nodeMeta = {}; subTopics = {}; lastStepKey = {};
+  evQueue = []; replaying = false;   // ★ 清空回放队列
+  currentNode = 'all'; autoFollow = true;
+  topo = new TopoViz(document.getElementById('topo'));
+  topo.setMain();
+  topo.onClick(id => selectNode(id));
+  nodeMeta['main'] = { topic:'主 agent', status:'idle' };
+  traces['main'] = [];
+  refreshNodeSel();
+  document.getElementById('feed').innerHTML = '';
+
+  try {
+    // 拿会话 ID
+    const st = await (await fetch('/status')).json();
+    const resp = await fetch('/chat', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({session_id: st.session_id, message: q}) });
+    if (!resp.ok) {
+      // ★ 服务器直接 500：显示状态码 + 响应体，便于定位
+      const body = await resp.text();
+      pushStep('main', 'main', {action:'http ' + resp.status, result: body.slice(0, 300) || '(empty body)'});
+      return;
+    }
+    const reader = resp.body.getReader(); const dec = new TextDecoder();
+    let buf = ''; let pend = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, {stream:true});
+      const lines = buf.split('\n\n'); buf = lines.pop();
+      for (const ln of lines) {
+        if (!ln.startsWith('data:')) continue;
+        // ★ 健壮解析：事件内容可能含 \n\n（工具输出空行），会与 SSE 分隔符冲突。
+        //   用累积式解析：JSON 不完整（SyntaxError）就拼到下一段再试。
+        pend += ln.slice(5).trim();
+        if (pend.length > 1000000) { pend = ''; continue; }  // 防无限累积
+        try { enqueueEvent(JSON.parse(pend)); pend = ''; }
+        catch (_) { /* JSON 不完整，等下一段 */ }
+      }
+    }
+  } catch (e) {
+    pushStep('main', 'main', {action:'error', result:String(e)});
+  } finally {
+    btn.disabled = false; spin.style.display = 'none';
+  }
+}
+
+function handleEvent(ev) {
+  if (ev.type === 'error') {
+    // 后端 ReAct 循环错误事件（如 DEEPSEEK_API_KEY 未设置）——显示出来，不静默
+    pushStep('main', 'main', {action:'error', result: String(ev.message || '(unknown)').slice(0, 300)});
+  } else if (ev.type === 'react_act') {
+    // 主 agent 动作（挂起，等 observe 合并）
+    const idx = traces['main'].length;
+    pushStep('main', 'main', {action: ev.tool, args: ev.args}, idx);
+    lastStepKey['main'] = idx;
+    topo.markRunning('main');
+    nodeMeta['main'].status = 'running';
+  } else if (ev.type === 'react_observe') {
+    const idx = lastStepKey['main'];
+    updateStep('main', idx, {result: ev.result});
+  } else if (ev.type === 'dispatch') {
+    ev.subtasks.forEach((topic, i) => {
+      const id = String(i);
+      subTopics[id] = topic;
+      traces[id] = []; nodeMeta[id] = { topic, status:'running' };
+      topo.addSubagent(id, topic);
+      topo.markRunning(id);
+    });
+    refreshNodeSel();
+  } else if (ev.type === 'subagent_step') {
+    const id = String(ev.sid);
+    if (!traces[id]) { traces[id] = []; nodeMeta[id] = { topic: subTopics[id]||('子'+id), status:'running' }; }
+    if (ev.tool) {  // act
+      const idx = traces[id].length;
+      pushStep(id, 'sub', {action: ev.tool, args: ev.args}, idx);
+      lastStepKey[id] = idx;
+    } else {        // observe
+      updateStep(id, lastStepKey[id] || 0, {result: ev.result});
+    }
+    topo.markRunning(id);
+  } else if (ev.type === 'subagent_done') {
+    const id = String(ev.sid);
+    pushStep(id, 'sub', {final:true, summary:`✅ ${ev.summary}（${ev.duration}s）`});
+    topo.markDone(id);
+    if (nodeMeta[id]) nodeMeta[id].status = 'done';
+    refreshNodeSel();
+  } else if (ev.type === 'dispatch_done') {
+    const s = ev.stats;
+    const el = document.getElementById('stats');
+    el.innerHTML = `⚡ 派发 ${s.subagent_count} 个 subagent · 并行墙钟 <b style="color:var(--cyan)">${s.wall_clock}s</b> `
+      + `vs 串行基线 ${s.serial_sum}s · 加速 <b style="color:var(--green)">${(s.serial_sum/s.wall_clock).toFixed(2)}×</b>`;
+    el.style.display = 'block';
+  } else if (ev.type === 'done') {
+    document.getElementById('ans').textContent = ev.content || '(无)';
+    topo.markDone('main');
+    if (nodeMeta['main']) nodeMeta['main'].status = 'done';
+    refreshNodeSel();
+  }
+}
+
+function pushStep(node, nodeType, step, idx) {
+  if (!traces[node]) { traces[node] = []; nodeMeta[node] = {topic: subTopics[node]||node, status:'running'}; }
+  if (idx !== undefined) traces[node][idx] = step; else traces[node].push(step);
+  // 同步到全局流（同样合并逻辑）
+  if (idx !== undefined) {
+    const aIdx = allSteps.findIndex(s => s.node === node && s.step._idx === idx);
+    if (aIdx >= 0) allSteps[aIdx] = { node, nodeType, step };
+    else allSteps.push({ node, nodeType, step });
+  } else {
+    allSteps.push({ node, nodeType, step });
+  }
+  step._idx = idx !== undefined ? idx : (traces[node].length - 1);
+  renderFeed();
+}
+
+function updateStep(node, idx, patch) {
+  const t = traces[node];
+  if (!t || t[idx] === undefined) return;
+  Object.assign(t[idx], patch);
+  const aIdx = allSteps.findIndex(s => s.node === node && s.step._idx === idx);
+  if (aIdx >= 0) allSteps[aIdx].step = t[idx];
+  renderFeed();
+}
+
+function selectNode(id) {
+  currentNode = id; autoFollow = (id === 'all');
+  refreshNodeSel();
+  renderFeed();
+}
+
+function refreshNodeSel() {
+  const sel = document.getElementById('nodesel');
+  let html = '<span style="opacity:.6">节点：</span>';
+  html += `<button class="nodebtn${currentNode==='all'?' on':''}" onclick="selectNode('all')">全部实时流</button>`;
+  const ids = ['main', ...Object.keys(subTopics)];
+  ids.forEach(id => {
+    const m = nodeMeta[id] || {};
+    const tag = m.status === 'done' ? '<span class="status-tag status-done">done</span>'
+              : m.status === 'running' ? '<span class="status-tag status-running">run</span>' : '';
+    const lbl = id === 'main' ? '主agent' : (m.topic||id).slice(0,10);
+    html += `<button class="nodebtn${currentNode===id?' on':''}" onclick="selectNode('${id}')">${lbl}${tag}</button>`;
+  });
+  sel.innerHTML = html;
+}
+
+function renderFeed() {
+  const box = document.getElementById('feed');
+  let steps;
+  if (currentNode === 'all') steps = allSteps;
+  else steps = (traces[currentNode]||[]).map(s => ({node:currentNode, nodeType: currentNode==='main'?'main':'sub', step:s}));
+  let html = '';
+  steps.forEach(({node, nodeType, step: s}) => {
+    const isMain = nodeType === 'main';
+    let lbl = isMain ? '主agent' : (nodeMeta[node]?.topic || node);
+    if (lbl.length > 12) lbl = lbl.slice(0, 12) + '…';   // ★ 截断过长节点标签
+    const cls = isMain ? 'step main' : 'step sub';
+    const a = s.action ? `<div class="act">🔧 ${s.action}${s.args ? '(' + JSON.stringify(s.args).slice(0,70) + ')' : ''}</div>` : '';
+    const o = s.result ? `<div class="obs">👁 ${String(s.result)}</div>` : '';
+    const fa = s.final ? `<div class="fa">✓ 完成</div>` : '';
+    const dl = s.summary ? `<div class="done-line">${s.summary}</div>` : '';
+    html += `<div class="${cls}"><span class="nbadge">${lbl}</span>${a}${o}${fa}${dl}</div>`;
+  });
+  if (!steps.length) html = '<div style="color:var(--muted);font-size:12px;padding:8px">等待步骤流…（点左侧节点可只看该节点）</div>';
+  box.innerHTML = html;
+  if (autoFollow) box.scrollTop = box.scrollHeight;
+}
+</script>
+</body>
+</html>
