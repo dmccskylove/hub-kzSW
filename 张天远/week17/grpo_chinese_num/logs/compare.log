@@ -1,0 +1,134 @@
+====================================================================================================
+模型组：0.5b  （列格式：answer格式率/think格式率/greedy正确率/loose pass@8）
+====================================================================================================
+难度                  base_0.5b                       g1_0.5b_answer                    g2_0.5b_think           
+L1            F0.12/T0.00/0.28/0.82             F1.00/T0.00/1.00/1.00             F1.00/T1.00/1.00/1.00       
+L2            F0.30/T0.00/0.06/0.66             F1.00/T0.00/1.00/1.00             F1.00/T1.00/1.00/1.00       
+L3            F0.16/T0.00/0.12/0.50             F1.00/T0.00/1.00/1.00             F1.00/T1.00/1.00/1.00       
+L4            F0.30/T0.00/0.26/0.52             F1.00/T0.00/1.00/1.00             F1.00/T1.00/1.00/1.00       
+L5            F0.34/T0.00/0.32/0.38             F1.00/T0.00/1.00/1.00             F1.00/T1.00/1.00/1.00       
+L6            F0.50/T0.00/0.38/0.26             F1.00/T0.00/1.00/1.00             F1.00/T1.00/1.00/1.00       
+
+样例对照（g1_0.5b_answer）：
+
+--- L3_3digit ---
+  643 → 六百四十三
+    前: '<answer>600</answer>'
+    后: '<answer>643</answer>'
+  202 → 二百零二
+    前: '105'
+    后: '<answer>202</answer>'
+
+--- L4_4digit ---
+  7270 → 七千二百七十
+    前: '105'
+    后: '<answer>7270</answer>'
+  3608 → 三千六百零八
+    前: '125'
+    后: '<answer>3608</answer>'
+
+--- L5_5digit ---
+  15082 → 一万五千零八十二
+    前: '15082 = 15000'
+    后: '<answer>15082</answer>'
+  25765 → 二万五千七百六十五
+    前: '10000'
+    后: '<answer>25765</answer>'
+
+样例对照（g2_0.5b_think）：
+
+--- L3_3digit ---
+  643 → 六百四十三
+    前: '<answer>600</answer>'
+    后: '<think>643 = 四千四百三十一</think>\n\n<answer>六千四百三十一</answer>'
+  202 → 二百零二
+    前: '105'
+    后: '<think>202 = 二千零二十</think>\n<answer>二千零二十</answer>'
+
+--- L4_4digit ---
+  7270 → 七千二百七十
+    前: '105'
+    后: '<think>7270 = 七千二百七十</think>\n<answer>七千二百七十</answer>'
+  3608 → 三千六百零八
+    前: '125'
+    后: '<think>3608 = 三万六千零八</think>\n<answer>三万六千零八</answer>'
+
+--- L5_5digit ---
+  15082 → 一万五千零八十二
+    前: '15082 = 15000'
+    后: '<think>15082 = 一千五百零八贰</think>\n\n<answer>一千五百零八贰</answer>'
+  25765 → 二万五千七百六十五
+    前: '10000'
+    后: '<think>25765 = 二千五百七十六万五千</think>\n\n<answer>二千五百七十六万五千</answer>'
+/root/autodl-tmp/grpo_chinese_num/src/compare_results.py:104: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  axes[0].legend(fontsize=8)
+/root/autodl-tmp/grpo_chinese_num/src/compare_results.py:108: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  axes[1].legend(fontsize=8)
+/root/autodl-tmp/grpo_chinese_num/src/compare_results.py:112: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  axes[2].legend(fontsize=8)
+/root/autodl-tmp/grpo_chinese_num/src/compare_results.py:116: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  axes[3].legend(fontsize=8)
+训练曲线已保存：/root/autodl-tmp/grpo_chinese_num/outputs/figures/train_curves_0.5b.png
+====================================================================================================
+模型组：1.5b  （列格式：answer格式率/think格式率/greedy正确率/loose pass@8）
+====================================================================================================
+难度                  base_1.5b                       g3_1.5b_answer                    g4_1.5b_think           
+L1            F0.12/T0.00/1.00/1.00             F1.00/T0.00/1.00/1.00             F1.00/T1.00/1.00/1.00       
+L2            F0.36/T0.00/0.94/1.00             F1.00/T0.00/0.98/1.00             F1.00/T1.00/0.98/1.00       
+L3            F0.14/T0.00/0.96/1.00             F1.00/T0.00/0.94/1.00             F1.00/T1.00/0.90/0.98       
+L4            F0.26/T0.00/0.90/1.00             F1.00/T0.00/0.98/0.98             F1.00/T1.00/0.98/1.00       
+L5            F0.52/T0.00/0.50/0.74             F1.00/T0.00/0.82/0.92             F1.00/T1.00/1.00/1.00       
+L6            F0.70/T0.00/0.44/0.50             F1.00/T0.00/0.66/0.80             F1.00/T1.00/1.00/1.00       
+
+样例对照（g3_1.5b_answer）：
+
+--- L3_3digit ---
+  643 → 六百四十三
+    前: '六百四十三'
+    后: '<answer>六百四十三</answer>'
+  202 → 二百零二
+    前: '二百零二'
+    后: '<answer>二千二百</answer>'
+
+--- L4_4digit ---
+  7270 → 七千二百七十
+    前: '<answer>七千二百七十</answer>'
+    后: '<answer>七千二百七十</answer>'
+  3608 → 三千六百零八
+    前: '<answer>三千六百零八</answer>'
+    后: '<answer>三千六百零八</answer>'
+
+--- L5_5digit ---
+  15082 → 一万五千零八十二
+    前: '<answer>一万五千零八十二</answer>'
+    后: '<answer>一万五千零八十二</answer>'
+  25765 → 二万五千七百六十五
+    前: '<answer>二万五千七百六十五</answer>'
+    后: '<answer>二万五千七百六十五</answer>'
+
+样例对照（g4_1.5b_think）：
+
+--- L3_3digit ---
+  643 → 六百四十三
+    前: '六百四十三'
+    后: '<think>643 分解为 6 个百、4 个十、3 个一，百位和十位不读零</think><answer>六百四十三</answer>'
+  202 → 二百零二
+    前: '二百零二'
+    后: '<think>202 分解为 2 个百、0 个十、2 个一，百位和十位都为非零，所以直接说二百零二。</think><answer>二百零二</answer>'
+
+--- L4_4digit ---
+  7270 → 七千二百七十
+    前: '<answer>七千二百七十</answer>'
+    后: '<think>7270 分解为：</think>\n<answer>七千二百七十</answer>'
+  3608 → 三千六百零八
+    前: '<answer>三千六百零八</answer>'
+    后: '<think>3608 分解为：</think>\n<answer>三千六百零八</answer>'
+
+--- L5_5digit ---
+  15082 → 一万五千零八十二
+    前: '<answer>一万五千零八十二</answer>'
+    后: '<think>15082 分解为：</think>\n<answer>一万五千零八十二</answer>'
+  25765 → 二万五千七百六十五
+    前: '<answer>二万五千七百六十五</answer>'
+    后: '<think>25765 分解为：</think>\n<answer>二万五千七百六十五</answer>'
+训练曲线已保存：/root/autodl-tmp/grpo_chinese_num/outputs/figures/train_curves_1.5b.png

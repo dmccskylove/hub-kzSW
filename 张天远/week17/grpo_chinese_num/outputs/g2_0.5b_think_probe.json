@@ -1,0 +1,204 @@
+{
+  "model": "outputs/g2_0.5b_think_ckpt",
+  "think": true,
+  "dtype": "bf16",
+  "seed": 42,
+  "L1_1digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.46,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.2475,
+    "sample_loose_acc": 0.9775,
+    "pass@8": 0.9,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.9,
+    "loose_informative_group_rate": 0.16,
+    "think_sample_rate": 0.9775,
+    "elapsed_sec": 3.8,
+    "examples": [
+      {
+        "num": "1",
+        "answer": "一",
+        "greedy_output": "<think>1 = 十一</think>\n\n<answer>十一</answer>"
+      },
+      {
+        "num": "4",
+        "answer": "四",
+        "greedy_output": "<think>4 = 四</think>\n<answer>四</answer>"
+      },
+      {
+        "num": "8",
+        "answer": "八",
+        "greedy_output": "<think>8 = 十二</think>\n\n<answer>十二</answer>"
+      }
+    ]
+  },
+  "L2_2digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.32,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.1,
+    "sample_loose_acc": 0.9475,
+    "pass@8": 0.62,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.62,
+    "loose_informative_group_rate": 0.34,
+    "think_sample_rate": 0.96,
+    "elapsed_sec": 5.7,
+    "examples": [
+      {
+        "num": "18",
+        "answer": "十八",
+        "greedy_output": "<think>18 = 十八</think>\n\n<answer>十八</answer>"
+      },
+      {
+        "num": "24",
+        "answer": "二十四",
+        "greedy_output": "<think>24 = 十二</think>\n\n<answer>十二</answer>"
+      },
+      {
+        "num": "67",
+        "answer": "六十七",
+        "greedy_output": "<think>67 = 十六</think>\n\n<answer>十六</answer>"
+      }
+    ]
+  },
+  "L3_3digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.02,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.0475,
+    "sample_loose_acc": 0.8925,
+    "pass@8": 0.34,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.34,
+    "loose_informative_group_rate": 0.6,
+    "think_sample_rate": 0.9425,
+    "elapsed_sec": 6.3,
+    "examples": [
+      {
+        "num": "643",
+        "answer": "六百四十三",
+        "greedy_output": "<think>643 = 四千四百三十一</think>\n\n<answer>六千四百三十一</answer>"
+      },
+      {
+        "num": "202",
+        "answer": "二百零二",
+        "greedy_output": "<think>202 = 二千零二十</think>\n<answer>二千零二十</answer>"
+      },
+      {
+        "num": "750",
+        "answer": "七百五十",
+        "greedy_output": "<think>750 = 七千五百</think>\n\n<answer>七千五百</answer>"
+      }
+    ]
+  },
+  "L4_4digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.52,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.185,
+    "sample_loose_acc": 0.85,
+    "pass@8": 0.66,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.66,
+    "loose_informative_group_rate": 0.68,
+    "think_sample_rate": 0.9525,
+    "elapsed_sec": 6.3,
+    "examples": [
+      {
+        "num": "7270",
+        "answer": "七千二百七十",
+        "greedy_output": "<think>7270 = 七千二百七十</think>\n<answer>七千二百七十</answer>"
+      },
+      {
+        "num": "3608",
+        "answer": "三千六百零八",
+        "greedy_output": "<think>3608 = 三万六千零八</think>\n<answer>三万六千零八</answer>"
+      },
+      {
+        "num": "6288",
+        "answer": "六千二百八十八",
+        "greedy_output": "<think>6288 = 七千二百八十八</think>\n<answer>七千二百八十八</answer>"
+      }
+    ]
+  },
+  "L5_5digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.06,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.0575,
+    "sample_loose_acc": 0.825,
+    "pass@8": 0.3,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.3,
+    "loose_informative_group_rate": 0.74,
+    "think_sample_rate": 0.96,
+    "elapsed_sec": 6.8,
+    "examples": [
+      {
+        "num": "15082",
+        "answer": "一万五千零八十二",
+        "greedy_output": "<think>15082 = 一千五百零八贰</think>\n\n<answer>一千五百零八贰</answer>"
+      },
+      {
+        "num": "25765",
+        "answer": "二万五千七百六十五",
+        "greedy_output": "<think>25765 = 二千五百七十六万五千</think>\n\n<answer>二千五百七十六万五千</answer>"
+      },
+      {
+        "num": "48198",
+        "answer": "四万八千一百九十八",
+        "greedy_output": "<think>48198 = 四千八百一十九十八</think>\n\n<answer>四千八百一十九十八</answer>"
+      }
+    ]
+  },
+  "L6_6digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.04,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.025,
+    "sample_loose_acc": 0.7225,
+    "pass@8": 0.18,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.18,
+    "loose_informative_group_rate": 0.9,
+    "think_sample_rate": 0.9475,
+    "elapsed_sec": 8.6,
+    "examples": [
+      {
+        "num": "298148",
+        "answer": "二十九万八千一百四十八",
+        "greedy_output": "<think>298148 = 二十九万八千一千四百八十</think>\n\n<answer>二十九万八千一千四百八十</answer>"
+      },
+      {
+        "num": "433364",
+        "answer": "四十三万三千三百六十四",
+        "greedy_output": "<think>433364 = 四千三百三十三万六千四</think>\n\n<answer>四千三百三十三万六千四</answer>"
+      },
+      {
+        "num": "114901",
+        "answer": "十一万四千九百零一",
+        "greedy_output": "<think>114901 = 一千一百四十九万零一百一十</think>\n<answer>一千一百四十九万零一百一十</answer>"
+      }
+    ]
+  }
+}

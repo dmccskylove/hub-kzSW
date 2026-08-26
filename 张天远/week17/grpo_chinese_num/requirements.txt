@@ -1,0 +1,9 @@
+# GRPO 中文数字转换 — 依赖（云端 AutoDL 4090D 验证组合）
+# 参考项目 grpo_arithmetic 同款：trl 0.21 + transformers 5.x 需 src/trl_compat.py 补丁
+torch>=2.5
+transformers==5.5.3
+trl==0.21.0
+peft==0.15.0
+accelerate==1.5.2
+datasets
+matplotlib

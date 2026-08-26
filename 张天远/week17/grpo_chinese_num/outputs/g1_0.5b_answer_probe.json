@@ -1,0 +1,204 @@
+{
+  "model": "outputs/g1_0.5b_answer_ckpt",
+  "think": false,
+  "dtype": "bf16",
+  "seed": 42,
+  "L1_1digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 0.0,
+    "greedy_strict_acc": 0.0,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.005,
+    "sample_loose_acc": 0.9575,
+    "pass@8": 0.02,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.02,
+    "loose_informative_group_rate": 0.3,
+    "think_sample_rate": 0.0,
+    "elapsed_sec": 1.5,
+    "examples": [
+      {
+        "num": "1",
+        "answer": "一",
+        "greedy_output": "<answer>1</answer>"
+      },
+      {
+        "num": "4",
+        "answer": "四",
+        "greedy_output": "<answer>4</answer>"
+      },
+      {
+        "num": "8",
+        "answer": "八",
+        "greedy_output": "<answer>8</answer>"
+      }
+    ]
+  },
+  "L2_2digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 0.0,
+    "greedy_strict_acc": 0.0,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.005,
+    "sample_loose_acc": 0.98,
+    "pass@8": 0.04,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.04,
+    "loose_informative_group_rate": 0.16,
+    "think_sample_rate": 0.0,
+    "elapsed_sec": 1.1,
+    "examples": [
+      {
+        "num": "18",
+        "answer": "十八",
+        "greedy_output": "<answer>18</answer>"
+      },
+      {
+        "num": "24",
+        "answer": "二十四",
+        "greedy_output": "<answer>24</answer>"
+      },
+      {
+        "num": "67",
+        "answer": "六十七",
+        "greedy_output": "<answer>67</answer>"
+      }
+    ]
+  },
+  "L3_3digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 0.0,
+    "greedy_strict_acc": 0.0,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.0025,
+    "sample_loose_acc": 0.98,
+    "pass@8": 0.02,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.02,
+    "loose_informative_group_rate": 0.16,
+    "think_sample_rate": 0.0,
+    "elapsed_sec": 1.4,
+    "examples": [
+      {
+        "num": "643",
+        "answer": "六百四十三",
+        "greedy_output": "<answer>643</answer>"
+      },
+      {
+        "num": "202",
+        "answer": "二百零二",
+        "greedy_output": "<answer>202</answer>"
+      },
+      {
+        "num": "750",
+        "answer": "七百五十",
+        "greedy_output": "<answer>750</answer>"
+      }
+    ]
+  },
+  "L4_4digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 0.0,
+    "greedy_strict_acc": 0.0,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.0025,
+    "sample_loose_acc": 0.985,
+    "pass@8": 0.02,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.02,
+    "loose_informative_group_rate": 0.12,
+    "think_sample_rate": 0.0,
+    "elapsed_sec": 1.3,
+    "examples": [
+      {
+        "num": "7270",
+        "answer": "七千二百七十",
+        "greedy_output": "<answer>7270</answer>"
+      },
+      {
+        "num": "3608",
+        "answer": "三千六百零八",
+        "greedy_output": "<answer>3608</answer>"
+      },
+      {
+        "num": "6288",
+        "answer": "六千二百八十八",
+        "greedy_output": "<answer>6288</answer>"
+      }
+    ]
+  },
+  "L5_5digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 0.0,
+    "greedy_strict_acc": 0.0,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.0,
+    "sample_loose_acc": 0.9625,
+    "pass@8": 0.0,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.0,
+    "loose_informative_group_rate": 0.22,
+    "think_sample_rate": 0.0,
+    "elapsed_sec": 1.4,
+    "examples": [
+      {
+        "num": "15082",
+        "answer": "一万五千零八十二",
+        "greedy_output": "<answer>15082</answer>"
+      },
+      {
+        "num": "25765",
+        "answer": "二万五千七百六十五",
+        "greedy_output": "<answer>25765</answer>"
+      },
+      {
+        "num": "48198",
+        "answer": "四万八千一百九十八",
+        "greedy_output": "<answer>48198</answer>"
+      }
+    ]
+  },
+  "L6_6digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 0.0,
+    "greedy_strict_acc": 0.0,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.0,
+    "sample_loose_acc": 0.92,
+    "pass@8": 0.0,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.0,
+    "loose_informative_group_rate": 0.46,
+    "think_sample_rate": 0.0,
+    "elapsed_sec": 1.5,
+    "examples": [
+      {
+        "num": "298148",
+        "answer": "二十九万八千一百四十八",
+        "greedy_output": "<answer>298148</answer>"
+      },
+      {
+        "num": "433364",
+        "answer": "四十三万三千三百六十四",
+        "greedy_output": "<answer>433364</answer>"
+      },
+      {
+        "num": "114901",
+        "answer": "十一万四千九百零一",
+        "greedy_output": "<answer>114901</answer>"
+      }
+    ]
+  }
+}

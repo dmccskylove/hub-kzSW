@@ -1,0 +1,11 @@
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights:  22%|██▏       | 64/290 [00:00<00:00, 626.30it/s]Loading weights:  56%|█████▌    | 162/290 [00:00<00:00, 832.11it/s]Loading weights:  88%|████████▊ | 256/290 [00:00<00:00, 872.92it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 865.69it/s]
+The following generation flags are not valid and may be ignored: ['top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+L1_1digit  greedy_loose=1.00 ans_fmt=1.00 think=1.00 loose_acc=0.98 loose_pass@8=1.00 loose_informative=0.16 (3.8s)
+L2_2digit  greedy_loose=1.00 ans_fmt=1.00 think=1.00 loose_acc=0.95 loose_pass@8=1.00 loose_informative=0.34 (5.7s)
+L3_3digit  greedy_loose=1.00 ans_fmt=1.00 think=1.00 loose_acc=0.89 loose_pass@8=1.00 loose_informative=0.60 (6.3s)
+L4_4digit  greedy_loose=1.00 ans_fmt=1.00 think=1.00 loose_acc=0.85 loose_pass@8=1.00 loose_informative=0.68 (6.3s)
+L5_5digit  greedy_loose=1.00 ans_fmt=1.00 think=1.00 loose_acc=0.82 loose_pass@8=1.00 loose_informative=0.74 (6.8s)
+L6_6digit  greedy_loose=1.00 ans_fmt=1.00 think=1.00 loose_acc=0.72 loose_pass@8=1.00 loose_informative=0.90 (8.6s)
+
+结果已保存：outputs/g2_0.5b_think_probe.json
+GPU 峰值显存：1.72 GB

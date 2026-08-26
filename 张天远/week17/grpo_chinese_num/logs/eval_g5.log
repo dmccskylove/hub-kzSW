@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/root/autodl-tmp/grpo_chinese_num/src/probe_baseline.py", line 218, in <module>
+    main()
+  File "/root/autodl-tmp/grpo_chinese_num/src/probe_baseline.py", line 125, in main
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 817, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1729, in from_pretrained
+    return cls._from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1918, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/tokenization_utils_tokenizers.py", line 376, in __init__
+    raise ValueError(
+ValueError: Couldn't instantiate the backend tokenizer from one of: 
+(1) a `tokenizers` library serialization file, 
+(2) a slow tokenizer instance to convert or 
+(3) an equivalent slow tokenizer class to instantiate and convert. 
+You need to have sentencepiece or tiktoken installed to convert a slow tokenizer to a fast one.

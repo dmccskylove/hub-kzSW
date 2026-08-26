@@ -1,0 +1,204 @@
+{
+  "model": "outputs/g4_1.5b_think_ckpt",
+  "think": true,
+  "dtype": "bf16",
+  "seed": 42,
+  "L1_1digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.8,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.79,
+    "sample_loose_acc": 0.9925,
+    "pass@8": 1.0,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.86,
+    "loose_informative_group_rate": 0.06,
+    "think_sample_rate": 0.965,
+    "elapsed_sec": 10.9,
+    "examples": [
+      {
+        "num": "1",
+        "answer": "一",
+        "greedy_output": "<think>1 只能表示一个单位，不需要进行数位分解。</think><answer>一</answer>"
+      },
+      {
+        "num": "4",
+        "answer": "四",
+        "greedy_output": "<think>4 分解为 4 个一，没有十位和百位</think><answer>四</answer>"
+      },
+      {
+        "num": "8",
+        "answer": "八",
+        "greedy_output": "<think>8 分解为 8 个一，没有十位和百位</think><answer>八</answer>"
+      }
+    ]
+  },
+  "L2_2digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.96,
+    "greedy_loose_acc": 0.98,
+    "sample_strict_acc": 0.835,
+    "sample_loose_acc": 0.915,
+    "pass@8": 1.0,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.68,
+    "loose_informative_group_rate": 0.48,
+    "think_sample_rate": 0.9875,
+    "elapsed_sec": 9.9,
+    "examples": [
+      {
+        "num": "18",
+        "answer": "十八",
+        "greedy_output": "<think>18 分解为 1 个十、8 个一，十位为一要读一</think><answer>十八</answer>"
+      },
+      {
+        "num": "24",
+        "answer": "二十四",
+        "greedy_output": "<think>24 分解为 2 个十和 4 个一，十位不读零</think><answer>二十四</answer>"
+      },
+      {
+        "num": "67",
+        "answer": "六十七",
+        "greedy_output": "<think>67 分解为 6 个十和 7 个一，十位不读零</think><answer>六十七</answer>"
+      }
+    ]
+  },
+  "L3_3digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.9,
+    "greedy_loose_acc": 0.9,
+    "sample_strict_acc": 0.7675,
+    "sample_loose_acc": 0.8475,
+    "pass@8": 0.98,
+    "loose_pass@8": 0.98,
+    "informative_group_rate": 0.76,
+    "loose_informative_group_rate": 0.58,
+    "think_sample_rate": 0.9925,
+    "elapsed_sec": 10.3,
+    "examples": [
+      {
+        "num": "643",
+        "answer": "六百四十三",
+        "greedy_output": "<think>643 分解为 6 个百、4 个十、3 个一，百位和十位不读零</think><answer>六百四十三</answer>"
+      },
+      {
+        "num": "202",
+        "answer": "二百零二",
+        "greedy_output": "<think>202 分解为 2 个百、0 个十、2 个一，百位和十位都为非零，所以直接说二百零二。</think><answer>二百零二</answer>"
+      },
+      {
+        "num": "750",
+        "answer": "七百五十",
+        "greedy_output": "<think>750 分解为 7 个百、5 个十、0 个一，百位和十位都要读零</think><answer>七百五十</answer>"
+      }
+    ]
+  },
+  "L4_4digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.98,
+    "greedy_loose_acc": 0.98,
+    "sample_strict_acc": 0.7425,
+    "sample_loose_acc": 0.8225,
+    "pass@8": 0.98,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.78,
+    "loose_informative_group_rate": 0.72,
+    "think_sample_rate": 0.965,
+    "elapsed_sec": 10.7,
+    "examples": [
+      {
+        "num": "7270",
+        "answer": "七千二百七十",
+        "greedy_output": "<think>7270 分解为：</think>\n<answer>七千二百七十</answer>"
+      },
+      {
+        "num": "3608",
+        "answer": "三千六百零八",
+        "greedy_output": "<think>3608 分解为：</think>\n<answer>三千六百零八</answer>"
+      },
+      {
+        "num": "6288",
+        "answer": "六千二百八十八",
+        "greedy_output": "<think>6288 分解为：</think>\n<answer>六千二百八十八</answer>"
+      }
+    ]
+  },
+  "L5_5digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.72,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.43,
+    "sample_loose_acc": 0.6425,
+    "pass@8": 0.9,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.9,
+    "loose_informative_group_rate": 0.9,
+    "think_sample_rate": 0.9625,
+    "elapsed_sec": 9.4,
+    "examples": [
+      {
+        "num": "15082",
+        "answer": "一万五千零八十二",
+        "greedy_output": "<think>15082 分解为：</think>\n<answer>一万五千零八十二</answer>"
+      },
+      {
+        "num": "25765",
+        "answer": "二万五千七百六十五",
+        "greedy_output": "<think>25765 分解为：</think>\n<answer>二万五千七百六十五</answer>"
+      },
+      {
+        "num": "48198",
+        "answer": "四万八千一百九十八",
+        "greedy_output": "<think>48198 分解为：</think>\n<answer>四万八千一百九十八</answer>"
+      }
+    ]
+  },
+  "L6_6digit": {
+    "n": 50,
+    "k": 8,
+    "greedy_answer_fmt": 1.0,
+    "greedy_think_fmt": 1.0,
+    "greedy_strict_acc": 0.62,
+    "greedy_loose_acc": 1.0,
+    "sample_strict_acc": 0.3425,
+    "sample_loose_acc": 0.5225,
+    "pass@8": 0.82,
+    "loose_pass@8": 1.0,
+    "informative_group_rate": 0.8,
+    "loose_informative_group_rate": 0.98,
+    "think_sample_rate": 0.935,
+    "elapsed_sec": 9.7,
+    "examples": [
+      {
+        "num": "298148",
+        "answer": "二十九万八千一百四十八",
+        "greedy_output": "<think>298148 分解为：</think>\n<answer>二十九万八千一百四十八</answer>"
+      },
+      {
+        "num": "433364",
+        "answer": "四十三万三千三百六十四",
+        "greedy_output": "<think>433364 分解为：</think>\n<answer>四十三万三千三百六十四</answer>"
+      },
+      {
+        "num": "114901",
+        "answer": "十一万四千九百零一",
+        "greedy_output": "<think>114901 分解为：</think>\n<answer>十一万四千九百零一</answer>"
+      }
+    ]
+  }
+}

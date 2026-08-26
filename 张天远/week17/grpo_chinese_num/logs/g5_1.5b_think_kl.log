@@ -1,0 +1,30 @@
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 4923.70it/s]
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 4000.96it/s]
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
+  0%|          | 0/400 [00:00<?, ?it/s]Passing `generation_config` together with generation-related arguments=({'disable_compile'}) is deprecated and will be removed in future versions. Please pass either a `generation_config` object OR all generation parameters explicitly, but not both.
+  0%|          | 1/400 [00:05<33:23,  5.02s/it]Traceback (most recent call last):
+  File "/root/autodl-tmp/grpo_chinese_num/src/train_grpo.py", line 197, in <module>
+    main()
+  File "/root/autodl-tmp/grpo_chinese_num/src/train_grpo.py", line 181, in main
+    trainer.train()
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/trainer.py", line 1424, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/trainer.py", line 1506, in _inner_training_loop
+    self._run_epoch(
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/trainer.py", line 1734, in _run_epoch
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/transformers/trainer.py", line 1934, in training_step
+    self.accelerator.backward(loss, **kwargs)
+  File "/root/miniconda3/lib/python3.12/site-packages/accelerate/accelerator.py", line 2359, in backward
+    loss.backward(**kwargs)
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_tensor.py", line 581, in backward
+    torch.autograd.backward(
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py", line 825, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 594.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 474.69 MiB is free. Including non-PyTorch memory, this process has 23.04 GiB memory in use. Of the allocated memory 21.51 GiB is allocated by PyTorch, and 1.11 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+  0%|          | 1/400 [00:08<53:55,  8.11s/it]
